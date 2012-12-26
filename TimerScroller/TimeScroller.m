@@ -90,35 +90,28 @@ NSLocalizedStringFromTable(key, @"TimeScroller", nil)
 
 - (void)createFormatters
 {
-    NSArray* preferredLangs = [NSLocale preferredLanguages];
-    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:[preferredLangs objectAtIndex:0]];
-    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setCalendar:self.calendar];
     [dateFormatter setTimeZone:self.calendar.timeZone];
     [dateFormatter setDateFormat:@"h:mm a"];
-    dateFormatter.locale = locale;
     self.timeDateFormatter = dateFormatter;
     
     dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setCalendar:self.calendar];
     [dateFormatter setTimeZone:self.calendar.timeZone];
     dateFormatter.dateFormat = @"cccc";
-    dateFormatter.locale = locale;
     self.dayOfWeekDateFormatter = dateFormatter;
     
     dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setCalendar:self.calendar];
     [dateFormatter setTimeZone:self.calendar.timeZone];
     dateFormatter.dateFormat = @"MMMM d";
-    dateFormatter.locale = locale;
     self.monthDayDateFormatter = dateFormatter;
     
     dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setCalendar:self.calendar];
     [dateFormatter setTimeZone:self.calendar.timeZone];
     dateFormatter.dateFormat = @"MMMM d, yyyy";
-    dateFormatter.locale = locale;
     self.monthDayYearDateFormatter = dateFormatter;
 }
 
@@ -166,6 +159,13 @@ NSLocalizedStringFromTable(key, @"TimeScroller", nil)
         _lastDate=[NSDate date];
     }
     NSDate *today = [NSDate date];
+    
+    NSArray* preferredLangs = [NSLocale preferredLanguages];
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:[preferredLangs objectAtIndex:0]];
+    self.timeDateFormatter.locale = locale;
+    self.dayOfWeekDateFormatter.locale = locale;
+    self.monthDayDateFormatter.locale = locale;
+    self.monthDayYearDateFormatter.locale = locale;
     
     NSDateComponents *dateComponents = [self.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekOfYearCalendarUnit | NSWeekCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:date];
     NSDateComponents *todayComponents = [self.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekOfYearCalendarUnit | NSWeekCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:today];
