@@ -28,6 +28,11 @@
 
 @implementation TimeScroller
 
+#ifndef TimeScrollerLocalizedStrings
+#define TimeScrollerLocalizedStrings(key) \
+NSLocalizedStringFromTable(key, @"TimeScroller", nil)
+#endif
+
 - (id)initWithDelegate:(id<TimeScrollerDelegate>)delegate
 {
     UIImage *background = [[UIImage imageNamed:@"TimeScroller.bundle/timescroll_pointer"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 35.0f, 0.0f, 10.0f)];
@@ -85,28 +90,35 @@
 
 - (void)createFormatters
 {
+    NSArray* preferredLangs = [NSLocale preferredLanguages];
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:[preferredLangs objectAtIndex:0]];
+    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setCalendar:self.calendar];
     [dateFormatter setTimeZone:self.calendar.timeZone];
     [dateFormatter setDateFormat:@"h:mm a"];
+    dateFormatter.locale = locale;
     self.timeDateFormatter = dateFormatter;
     
     dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setCalendar:self.calendar];
     [dateFormatter setTimeZone:self.calendar.timeZone];
     dateFormatter.dateFormat = @"cccc";
+    dateFormatter.locale = locale;
     self.dayOfWeekDateFormatter = dateFormatter;
     
     dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setCalendar:self.calendar];
     [dateFormatter setTimeZone:self.calendar.timeZone];
     dateFormatter.dateFormat = @"MMMM d";
+    dateFormatter.locale = locale;
     self.monthDayDateFormatter = dateFormatter;
     
     dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setCalendar:self.calendar];
     [dateFormatter setTimeZone:self.calendar.timeZone];
     dateFormatter.dateFormat = @"MMMM d, yyyy";
+    dateFormatter.locale = locale;
     self.monthDayYearDateFormatter = dateFormatter;
 }
 
@@ -318,7 +330,7 @@
     {
         timeLabelFrame = CGRectMake(30.0f, 4.0f, 100.0f, 10.0f);
         
-        dateLabelString = @"Yesterday";
+        dateLabelString = TimeScrollerLocalizedStrings(@"Yesterday");
         dateLabelAlpha = 1.0f;
         backgroundFrame = CGRectMake(CGRectGetWidth(self.frame) - 85.0f, 0.0f, 85.0f, CGRectGetHeight(self.frame));
     }

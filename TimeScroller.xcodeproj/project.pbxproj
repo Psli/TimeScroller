@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		063F980B168BB8AE0002BF32 /* TimeScroller.strings in Resources */ = {isa = PBXBuildFile; fileRef = 063F9808168BB8AE0002BF32 /* TimeScroller.strings */; };
 		225F0899160823E700ACA878 /* TimeScroller.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 225F0898160823E700ACA878 /* TimeScroller.bundle */; };
 		D0C86AB4148C638200F81AB3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C86AB3148C638200F81AB3 /* UIKit.framework */; };
 		D0C86AB6148C638200F81AB3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C86AB5148C638200F81AB3 /* Foundation.framework */; };
@@ -19,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		063F9809168BB8AE0002BF32 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TimeScroller.strings; sourceTree = "<group>"; };
+		063F980A168BB8AE0002BF32 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/TimeScroller.strings"; sourceTree = "<group>"; };
 		225F0898160823E700ACA878 /* TimeScroller.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TimeScroller.bundle; sourceTree = "<group>"; };
 		D0C86AAF148C638200F81AB3 /* TimeScroller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeScroller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0C86AB3148C638200F81AB3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -50,6 +53,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		063F9807168BB8AD0002BF32 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				063F9808168BB8AE0002BF32 /* TimeScroller.strings */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
 		D07C3BF0148DD69600B8699E /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +131,7 @@
 		D0C86ACB148C639500F81AB3 /* TimeScroller */ = {
 			isa = PBXGroup;
 			children = (
+				063F9807168BB8AD0002BF32 /* Localization */,
 				D07C3BF0148DD69600B8699E /* Assets */,
 				D0C86AD2148C64F000F81AB3 /* TimeScroller.h */,
 				D0C86AD3148C64F000F81AB3 /* TimeScroller.m */,
@@ -170,6 +182,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 			);
 			mainGroup = D0C86AA4148C638200F81AB3;
 			productRefGroup = D0C86AB0148C638200F81AB3 /* Products */;
@@ -188,6 +201,7 @@
 			files = (
 				D0C86ABE148C638200F81AB3 /* InfoPlist.strings in Resources */,
 				225F0899160823E700ACA878 /* TimeScroller.bundle in Resources */,
+				063F980B168BB8AE0002BF32 /* TimeScroller.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,6 +222,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		063F9808168BB8AE0002BF32 /* TimeScroller.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				063F9809168BB8AE0002BF32 /* en */,
+				063F980A168BB8AE0002BF32 /* zh-Hans */,
+			);
+			name = TimeScroller.strings;
+			sourceTree = "<group>";
+		};
 		D0C86ABC148C638200F81AB3 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
