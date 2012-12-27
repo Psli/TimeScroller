@@ -40,8 +40,8 @@ NSLocalizedStringFromTable(key, @"TimeScroller", nil)
     self = [super initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, background.size.height)];
     if (self)
     {
-        self.calendar = [NSCalendar currentCalendar];
-        
+        [self createFormatters];
+
         self.frame = CGRectMake(0.0f, 0.0f, 320.0f, CGRectGetHeight(self.frame));
         self.alpha = 0.0f;
         self.transform = CGAffineTransformMakeTranslation(10.0f, 0.0f);
@@ -91,36 +91,35 @@ NSLocalizedStringFromTable(key, @"TimeScroller", nil)
 - (void)createFormatters
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setCalendar:self.calendar];
-    [dateFormatter setTimeZone:self.calendar.timeZone];
     [dateFormatter setDateFormat:@"h:mm a"];
     self.timeDateFormatter = dateFormatter;
     
     dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setCalendar:self.calendar];
-    [dateFormatter setTimeZone:self.calendar.timeZone];
     dateFormatter.dateFormat = @"cccc";
     self.dayOfWeekDateFormatter = dateFormatter;
     
     dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setCalendar:self.calendar];
-    [dateFormatter setTimeZone:self.calendar.timeZone];
     dateFormatter.dateFormat = @"MMMM d";
     self.monthDayDateFormatter = dateFormatter;
     
     dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setCalendar:self.calendar];
-    [dateFormatter setTimeZone:self.calendar.timeZone];
     dateFormatter.dateFormat = @"MMMM d, yyyy";
     self.monthDayYearDateFormatter = dateFormatter;
 }
 
-
-- (void)setCalendar:(NSCalendar *)cal
+- (void)setFormattersWithCalendar:(NSCalendar *)calendar
 {
-    _calendar = cal;
+    [self.timeDateFormatter setCalendar:calendar];
+    [self.timeDateFormatter setTimeZone:calendar.timeZone];
     
-    [self createFormatters];
+    [self.dayOfWeekDateFormatter setCalendar:calendar];
+    [self.dayOfWeekDateFormatter setTimeZone:calendar.timeZone];
+    
+    [self.monthDayDateFormatter setCalendar:calendar];
+    [self.monthDayDateFormatter setTimeZone:calendar.timeZone];
+    
+    [self.monthDayYearDateFormatter setCalendar:calendar];
+    [self.monthDayYearDateFormatter setTimeZone:calendar.timeZone];
 }
 
 
@@ -167,9 +166,20 @@ NSLocalizedStringFromTable(key, @"TimeScroller", nil)
     self.monthDayDateFormatter.locale = locale;
     self.monthDayYearDateFormatter.locale = locale;
     
-    NSDateComponents *dateComponents = [self.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekOfYearCalendarUnit | NSWeekCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:date];
-    NSDateComponents *todayComponents = [self.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekOfYearCalendarUnit | NSWeekCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:today];
-    NSDateComponents *lastDateComponents = [self.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekOfYearCalendarUnit | NSWeekCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:_lastDate];
+    NSCalendar *calendar;
+    if (self.calendar)
+    {
+        calendar = self.calendar;
+    }else{
+        calendar = [NSCalendar currentCalendar];
+    }
+    
+    [self setFormattersWithCalendar:calendar];
+
+    
+    NSDateComponents *dateComponents = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekOfYearCalendarUnit | NSWeekCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:date];
+    NSDateComponents *todayComponents = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekOfYearCalendarUnit | NSWeekCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:today];
+    NSDateComponents *lastDateComponents = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekOfYearCalendarUnit | NSWeekCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit fromDate:_lastDate];
     
     _timeLabel.text = [self.timeDateFormatter stringFromDate:date];
     
